@@ -1,0 +1,18 @@
+FROM python:3.9 AS mosaik-orch-base
+
+RUN apt-get update
+
+### mosaik orchestrator base
+RUN pip install --upgrade pip
+RUN pip install mosaik~=2.6.0 mosaik-api~=2.4.2 simpy~=3.0.13 simpy.io~=0.2.3
+
+WORKDIR /mosaik
+
+ENV PYTHONDONTWRITEBYTECODE=1
+
+FROM mosaik-orch-base
+
+### Add additional packages and simulators here.
+RUN pip install mosaik-hdf5==0.3
+
+ENTRYPOINT mosaik-hdf5 0.0.0.0:51002 --remote

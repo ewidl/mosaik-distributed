@@ -1,0 +1,42 @@
+# compose project name
+name: mosaik-distributed
+
+services:
+
+  main:
+      image: mosaik-main
+      build:
+        dockerfile: ./dockerfiles/Dockerfile_main
+      depends_on:
+        - csv 
+        - hdf5 
+        - householdsim 
+        - pypower 
+
+  csv:
+      image: mosaik-csv
+      build:
+        dockerfile: ./dockerfiles/Dockerfile_csv
+      ports:
+          - "51001:51001"
+
+  hdf5:
+      image: mosaik-hdf5
+      build:
+        dockerfile: ./dockerfiles/Dockerfile_hdf5
+      ports:
+          - "51002:51002"
+
+  householdsim:
+      image: mosaik-householdsim
+      build:
+        dockerfile: ./dockerfiles/Dockerfile_householdsim
+      ports:
+          - "51003:51003"
+
+  pypower:
+      image: mosaik-pypower
+      build:
+        dockerfile: ./dockerfiles/Dockerfile_pypower
+      ports:
+          - "51004:51004"
